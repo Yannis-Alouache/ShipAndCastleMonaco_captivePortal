@@ -1,24 +1,22 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
 
-    <title>Portail de Connexion</title>
-   
-    <script type="application/javascript">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Portail de Connexion</title>
+
+  <script type="application/javascript">
         (function (window, document, default_url) {'use strict';
-            var nebula = {};  // create container
-            // parsing url query parameters
-            var parseQueryParameters = function () {
-                var params = {};
-                var query = window.location.search.substr(1);
+            const nebula = {}; 
+            const parseQueryParameters = () => {
+                const params = {};
+                const query = window.location.search.substr(1);
                 query.split('&').forEach(function(param) {
-                    var item = param.split('=');
+                    const item = param.split('=');
                     params[item[0]] = decodeURIComponent(item[1]);
                 });
                 return params;
@@ -26,8 +24,8 @@
             nebula.params = parseQueryParameters();
             // get post url
             nebula.acquireCallbackUrl = function () {
-                var postUrl = null;
-                if (nebula.params.url != null) {
+                const postUrl = null;
+                if (nebula.params.url !== null) {
                     postUrl = nebula.params.url;
                 } else {
                     postUrl = default_url;
@@ -52,25 +50,26 @@
           const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           if (!re.test(mail)) {
             return false
+          } else {
+            document.getElementById("error").style.display = "none"
+            return true;
           }
-          document.getElementById("error").style.display = "none"
-          return true;
         }
     </script>
-</head>
+    </head>
 
-<body>
-    <nav class="navbar" style="background-color: #026962; height: 80px">
+    <body>
+      <nav class="navbar" style="background-color: #026962; height: 80px">
         <div class="container">
           <span class="navbar-brand mb-0 h1" style="color: white; font-weight: 600">SHIP AND CASTLE</span>
         </div>
       </nav>
-        
+
       <div class="content">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-md-6">
-              <img src="images/Illustration.svg" alt="Image" class="img-fluid illu">
+              <img src="assets/Illustration.svg" alt="Image" class="img-fluid illu">
             </div>
             <div class="col-md-12 col-sm-12 col-lg-6 contents">
               <div class="row justify-content-center">
@@ -78,27 +77,29 @@
                   <div class="mb-4">
                     <h3>Connectez-Vous</h3>
                   </div>
-                  <form id="loginform" name="f" action="javascript:;" enctype="application/x-www-form-urlencoded" method="GET" onsubmit="NEBULA.submitEvent()">
+                  <form id="loginform" name="f" action="javascript:;" enctype="application/x-www-form-urlencoded"
+                    method="GET" onsubmit="NEBULA.submitEvent()">
                     <p id="error" style="color: red; display: none">Rentrez une Email valide</p>
                     <p id="error2" style="color: red; display: none">Il y a eu une erreur</p>
                     <div class="form-group first">
                       <input type="text" placeholder="Email" class="form-control" id="username">
                     </div>
                     <div id="aled">
-    
+
                     </div>
-                    <input type="submit" id="submit-btn" value="Continuez" style="background-color: #026962; margin-top: 30px" class="btn btn-block btn-primary">
-                    
+                    <input type="submit" id="submit-btn" value="Continuez"
+                      style="background-color: #026962; margin-top: 30px" class="btn btn-block btn-primary">
+
                   </form>
                 </div>
               </div>
-              
+
             </div>
-            
+
           </div>
         </div>
       </div>
-    <script type="application/javascript">
+      <script type="application/javascript">
 
         const callApi = async () => {
           const fetchOpt = {
@@ -116,24 +117,21 @@
         }
 
         (function (window, document, nebula) {'use strict';
-        var postURL = nebula.acquireCallbackUrl();
+        const postURL = nebula.acquireCallbackUrl();
         document.getElementById("submit-btn").addEventListener("click", () => {
-          if (checkMail()) {
-            if (postURL) {
+          if (checkMail() && postURL) {
               try {
                 callApi().then((value) => {
                   if (value.status === "success") {
-                    console.log(value)
                     window.location.href = "https://google.com"
-                  }
-                  else {
+                  } else {
                     document.getElementById('error2').style.display = "block";
                   }
                 })
               } catch (error) {
+                console.log(error)
                 return;
               }
-            }
           }
           else {
             document.getElementById("error").style.display = "block";
@@ -142,5 +140,6 @@
 
         })(window, window.document, window.NEBULA);
     </script>
-</body>
-</html>
+    </body>
+
+    </html>
